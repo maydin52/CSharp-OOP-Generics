@@ -1,0 +1,163 @@
+//1-struct: T Deger tipli olabilir
+//2-class : T Referans tipli olabilir...
+//3-inheritance : T base class
+//4-interface : T; aynı arayuzu uygulayan sınıflar olabilir
+//5-new() :T de ; Default ctor olmasını ister...
+
+// bu kullanımda; birden fazla kısıt var ise; new() en sonda olmalıdır...
+
+// NSA Generic denilince T her turlu tip olabilir...
+// Jenerik kısıtlar ile T her turlu tip olamaz....
+
+//--------------------------------------------------------------------------------------------------
+
+//1
+
+internal class Islemler<T> where T : struct
+    {
+        public void Islem(T t)
+        { 
+        
+        }
+
+        public T Islem2(T t)
+        {
+            return t;
+        }
+    }
+
+//T: sadece deger tipli değişken olabilir...
+//Islemler<string> islemler1 = new Islemler<string>();
+Islemler<int> islemler2 = new Islemler<int>();
+Islemler<double> islemler3 = new Islemler<double>();
+//Islemler<object> islemler4 = new Islemler<object>();
+Islemler<char> islemler5 = new Islemler<char>();
+
+//--------------------------------------------------------------------------------------------------
+
+//2
+
+internal class PersonelIslemleri<T> where  T: Personel
+{
+
+}
+
+PersonelIslemleri<Personel> p = new PersonelIslemleri<Personel>();
+
+//--------------------------------------------------------------------------------------------------
+
+//3
+
+internal class PersonelIslemleri<T> where  T: Personel
+{
+
+}
+
+internal class CEO:Personel
+{
+
+}
+
+internal class Guvenlik
+{
+
+}
+
+PersonelIslemleri<CEO> personelIslemleri1 = new PersonelIslemleri<CEO>();
+//Guvenlik sınıfı Personelden turetilmediğinden kabul etmez...
+//PersonelIslemleri<Guvenlik> personelIslemleri3 = new PersonelIslemleri<Guvenlik>();
+
+//--------------------------------------------------------------------------------------------------
+
+//4
+
+internal class SilahIslemleri<T> where T : ISilahTasiyabilir
+{
+
+}
+
+internal class CEO:Personel,ISilahTasiyabilir
+{
+
+}
+
+internal class Guvenlik:ISilahTasiyabilir
+{
+
+}
+
+SilahIslemleri<CEO> silahIslemleri1 = new SilahIslemleri<CEO>(); 
+SilahIslemleri<Guvenlik> silahIslemleri2 = new SilahIslemleri<Guvenlik>(); 
+//Hizmetli sınıfı ISilhaTasiyabilir arayuzunu uygulamadığından hata verir...
+//SilahIslemleri<Hizmetli> silahIslemleri3 = new SilahIslemleri<Hizmetli>(); 
+
+//--------------------------------------------------------------------------------------------------
+
+//5
+
+internal class PersonnelManager<T> where T : new()
+{
+
+}
+
+internal class CEO:Personel,ISilahTasiyabilir
+{
+
+}
+
+internal class Hizmetli:Personel
+{
+
+}
+
+internal class Stajyer:Personel
+{
+    public Stajyer(string str)
+    {
+            
+    }
+}
+
+PersonnelManager<CEO> personnelManager1 = new PersonnelManager<CEO>();
+PersonnelManager<Hizmetli> personnelManager2= new PersonnelManager<Hizmetli>();
+
+//Olmaz... NEDEN...
+//Stajyer sınıfında deault ctor olamdığından çalışmaz...
+//PersonnelManager<Stajyer> personnelManager3 = new PersonnelManager<Stajyer>();
+
+//--------------------------------------------------------------------------------------------------
+
+//Birden Fazla Kısıt Ekleme
+
+// Dikkat new() hep sonda olmak zorunda.
+
+internal class PersonnelManager<T> where T : Personel, new()
+{
+
+}
+
+
+//--------------------------------------------------------------------------------------------------
+
+//Sonradan Ekleme
+
+// Sonradan Personel sınıfını eklediğimizde;
+
+internal class PersonnelManager<T> where T : Personel, new()
+{
+
+}
+
+internal class Guvenlik:ISilahTasiyabilir
+{
+
+}
+
+//Sonradan...  Güvenlik Personel sınıfından miras almadığı için;
+//eklenen Personel kısıtından dolayı kabul etmez... 
+//PersonnelManager<Guvenlik> personnelManager4 = new PersonnelManager<Guvenlik>();
+
+//--------------------------------------------------------------------------------------------------
+
+
+
