@@ -1,3 +1,12 @@
+// değer tiplilerin null olarak gelebileceği konusu
+// sql den gelen değer tipli veri null gelirse onu nasıl okyacağız?
+// nullable types
+// null hiç değer yok demektir.
+
+//int? Nullable operatörü
+
+
+
 Nullable<int> ID = new Nullable<int>();
 
 ID = null;
