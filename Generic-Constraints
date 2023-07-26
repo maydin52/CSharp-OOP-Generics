@@ -9,6 +9,14 @@
 // NSA Generic denilince T her turlu tip olabilir...
 // Jenerik kısıtlar ile T her turlu tip olamaz....
 
+// Lineer Programming. Orada kısıtlar verilir ve bir estimation tahmşininde bulunulması istenir, yöneylem vs
+// Kısıtlar veri kümesini filtreler
+// Entity frameworkte ve mvc de karşımıza çıkacak. Gördüğümüzde yorumlayabilmemiz önemli.
+// verinin doğru bir şekilde girilmesi için kullanıcının zorlanması
+// bizim o T nin herşey olmasını istemediğimiz durumlarda kullanıyoruz. Yani bu durumda t her türlü tip olamaz
+// T yerine Tentity, Tresult demek daha doğru
+
+
 //--------------------------------------------------------------------------------------------------
 
 //1
@@ -42,6 +50,11 @@ internal class PersonelIslemleri<T> where  T: Personel
 
 }
 
+internal class Personel
+{
+
+}
+
 PersonelIslemleri<Personel> p = new PersonelIslemleri<Personel>();
 
 //--------------------------------------------------------------------------------------------------
@@ -63,6 +76,11 @@ internal class Guvenlik
 
 }
 
+internal class Personel
+{
+
+}
+
 PersonelIslemleri<CEO> personelIslemleri1 = new PersonelIslemleri<CEO>();
 //Guvenlik sınıfı Personelden turetilmediğinden kabul etmez...
 //PersonelIslemleri<Guvenlik> personelIslemleri3 = new PersonelIslemleri<Guvenlik>();
@@ -70,6 +88,11 @@ PersonelIslemleri<CEO> personelIslemleri1 = new PersonelIslemleri<CEO>();
 //--------------------------------------------------------------------------------------------------
 
 //4
+
+internal interface ISilahTasiyabilir
+{
+
+}
 
 internal class SilahIslemleri<T> where T : ISilahTasiyabilir
 {
@@ -82,6 +105,11 @@ internal class CEO:Personel,ISilahTasiyabilir
 }
 
 internal class Guvenlik:ISilahTasiyabilir
+{
+
+}
+
+internal class Personel
 {
 
 }
@@ -118,6 +146,11 @@ internal class Stajyer:Personel
     }
 }
 
+internal class Personel
+{
+
+}
+
 PersonnelManager<CEO> personnelManager1 = new PersonnelManager<CEO>();
 PersonnelManager<Hizmetli> personnelManager2= new PersonnelManager<Hizmetli>();
 
@@ -149,6 +182,11 @@ internal class PersonnelManager<T> where T : Personel, new()
 }
 
 internal class Guvenlik:ISilahTasiyabilir
+{
+
+}
+
+internal class Personel
 {
 
 }
