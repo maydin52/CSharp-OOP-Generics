@@ -1,0 +1,7 @@
+Nullable<int> ID = new Nullable<int>();
+
+ID = null;
+
+int? sID = null;
+
+//int kID = null;
