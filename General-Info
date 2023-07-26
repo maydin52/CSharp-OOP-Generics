@@ -119,6 +119,12 @@ Dictionary<> Hashtable e karşılık geliyor.
 Queue<> Queue e karşılık geliyor.
 Stack<> Stack e karşılık geliyor.
 
+
+//Dictionary kullanımı...
+Dictionary<int,string> dict = new Dictionary<int,string>();
+dict.Add(34, "Istanbul");
+
+
 Mümkün oldukça generic koleksiyon kullanılmalı.
 Çünkü; 1. Performans 2. Tip Güvenliği
 
