@@ -1,0 +1,222 @@
+
+
+internal class Islem<T>
+    {
+        public void Ekle(T t)
+        { 
+        
+        }
+    }
+
+internal class Urun
+    {
+    }
+
+
+int[] sayilar = { 43, 5, 778, 54, 433, 212 };
+string[] sehirler = {"Istanbul","Ankara","Bursa" };
+double[] fiyatlar = { 44.90, 33.50, 12.90 };
+
+ArrayList liste1 = new ArrayList();
+//liste1.AddRange(sayilar);
+liste1.AddRange(sehirler);
+
+foreach(object obj in liste1)
+    Console.WriteLine(obj);
+
+Console.WriteLine(sayilar);
+
+Console.WriteLine("------------------------");
+void TamSayilariYaz(int[] dizi)
+{ 
+   foreach(int sayi in dizi)
+        Console.Write(sayi  + " ");
+    Console.WriteLine();
+}
+void StringleriYaz(string[] dizi)
+{
+    foreach (string item in dizi)
+        Console.Write(item + " ");
+    Console.WriteLine();
+}
+
+TamSayilariYaz(sayilar);
+StringleriYaz(sehirler);
+
+//---------------------------------------------------------------------------------------------------------------------------------------------
+
+//Generic Metod
+
+<>
+tipte artık bir değişken gibi davranıyor.
+
+void Yaz<T>(T[] dizi)
+foreach(T item in dizi). C W item
+Yaz<int>(sayilar);
+
+her tip için 10 tane metod yazmaktansa
+tipde değişken olabilir artık.
+bazen design time da bazen run time da belli olabiliyor tip
+
+Templates konusundan geliyor. T oradan geliyor.
+Genellikle T, U, V olarak kullanılır ama artık Tentity, Tresult gibi kullanılıyor.
+
+
+void Yaz<T>(T[] dizi)
+{ 
+    foreach(T item in dizi)
+        Console.Write(item  + " ");
+    Console.WriteLine();
+}
+
+Yaz(sayilar);
+Yaz(sehirler);
+Yaz(fiyatlar);
+
+Yaz<int>(sayilar);
+Yaz<string>(sehirler);
+Yaz<double>(fiyatlar);
+
+Console.WriteLine("------------");
+
+//---------------------------------------------------------------------------------------------------------------------------------------------
+
+//Generic Class Kullanımı
+
+Islem<int> islem1 = new Islem<int>();
+Islem<Urun> islem3 = new Islem<Urun>();
+Ekle Metodunu çağırdığımızda T ye göre imzada çıkıyor
+"internal class Islem<T>
+    {
+        public void Ekle(T t)
+        { 
+        
+        }
+    }"
+
+
+
+Islem<int> islem1 = new Islem<int>();
+Islem<string> islem2 = new Islem<string>();
+Islem<Urun> islem3 = new Islem<Urun>();
+
+//---------------------------------------------------------------------------------------------------------------------------------------------
+
+//Generic Collections
+//N.Ş.A. generic kolleksiyonları kullanının....
+// Neden ???
+// 1-Performans !!!!
+// 2-Tip Güvenliği....
+
+// List<> => ArrayList ******
+// Dictionary<> => Hashtable
+// Queue<>  => Queue
+// Stack<>  => Stack
+
+
+List<> ArrayList e karşılık geliyor.
+Dictionary<> Hashtable e karşılık geliyor.
+Queue<> Queue e karşılık geliyor.
+Stack<> Stack e karşılık geliyor.
+
+Mümkün oldukça generic koleksiyon kullanılmalı.
+Çünkü; 1. Performans 2. Tip Güvenliği
+
+1. Performans
+Performans ölçümü zamana bağlı olarak yapılır ve çalışma zamanı hesaplanır ve kıyaslanır. Bkz kod.
+int sayi eklememizin sebebi yazma yapmak
+Bizim ölçüme göre ortalama 10 kat hızlı. Çoğu uygulama yavaş denilmesinin sebebi donanımdan ziyade kodun optimize edilmemesi veya buna uygun yazılmaması. Dolayısıyla gereksiz yere çok kaynakta isteniyor.
+Tecrübe o yüzden fark ediyor.
+
+ildasm içinde incelediğinde; ikinci sütunda box ve unbox yapılan yerler
+Boxing - değer tipli bir değişkeni obje olarak tutmak istediğinizde arka planda boxing yapmak zorunda. Bir milyon defa Arraylist bu yüzden boşuna bu işlemleri yapıyor
+Unboxing - objeyi geri değer tipli değişkene çeviriyor.
+boxing - unboxing konusu genel bir konu
+
+
+Dikkat: 
+Örneğin int bir değerin boxing ve unboxing yapılışı;
+
+boxing : stack bölgesindeki int değer object türüne çevrilerek heap bölümüne gelir.
+unboxing : daha sonra bu sefer heap bölümüne gelen bu object çevrilerek stack bölgesine geri gelir.
+
+fakat generic collections kullanılırsa T tipi baştan verildiğinden bu işleme gerek kalmaz ve performans kazanımı yaşanır.
+
+generic te T tipi belli olduğundan tip çevrimi yapılmıyor.
+Generic te tşablonu yazıyoruz ve tipi bağımsız hale getiriyoruz.
+var da durum farklı. tip belli olana kadar bir şey gelecek diyorduk. Tipin ne olduğu bazen design time da bazen run time da belli olur.
+
+2. Tip Güvenliği
+Normal kolekisiyonlarda(generic olmayan) parametre object turunden olduğundan her tipi kabul eder... 
+Generic koleksiyonlarda ise belirli tip ne ise o tipten deger girmek zorundadir... Bu bize design-time(kod yazılma esnasında) hataları yakalama fırsatı verir...
+
+
+
+
+
+
+using System.Collections;
+
+List<int> liste1 = new List<int>();
+List<string> liste2= new List<string>();
+
+
+DateTime basla, bitir;
+TimeSpan fark;
+long sayac = 99999999;
+
+
+basla = DateTime.Now;
+ArrayList list1 = new ArrayList();
+for (int i = 0; i < sayac; i++)
+{
+    list1.Add(i);
+    int sayi = (int)list1[i];
+}
+bitir = DateTime.Now;
+fark = bitir - basla;
+Console.WriteLine("ArrayList ="+ fark.TotalMilliseconds   );
+
+
+basla = DateTime.Now;
+List<int> list2 = new List<int>();
+for (int i = 0; i < sayac; i++)
+{
+    list2.Add(i);
+    int sayi = list2[i];
+}
+bitir = DateTime.Now;
+fark = bitir - basla;
+Console.WriteLine("List<int> =" + fark.TotalMilliseconds);
+
+
+
+//2-Tip Güvenliği
+//Normal kolekisiyonlarda(generic olmayan) parametre object turunden olduğundan her tipi kabul eder... 
+Generic koleksiyonlarda ise belirli tip ne ise o tipten deger girmek zorundadir... Bu bize design-time(kod yazılma esnasında) hataları yakalama fırsatı verir...
+
+using System.Collections;
+
+ArrayList list1 = new ArrayList();
+list1.Add(123);
+list1.Add(1);
+list1.Add(3);
+list1.Add(5);
+//list1.Add("cevdet"); 
+
+
+//Sayların toplamını bulunuz?
+int toplam = 0;
+foreach (int i in list1)
+    toplam += i;
+
+Console.WriteLine(toplam);
+
+List<int>   list2 = new List<int>();
+
+list2.Add(12);
+list2.Add(1);
+list2.Add(15);
+//list2.Add("on");
+
+
